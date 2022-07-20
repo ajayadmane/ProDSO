@@ -21,7 +21,10 @@ pipeline {
                 stage('Git Repository Scanner') {
                     steps {
                         sh 'cd $WORKSPACE'
-                        sh 'trufflehog https://github.com/ajayadmane/ProDSO.git --json | jq "{branch:.branch, commitHash:.commitHash, path:.path, stringsFound:.stringsFound}" > trufflehog_report.json || true'
+                        sh'rm trufflhog || true'
+	                    sh'docker pull gesellix/trufflehog'
+	                   // sh'docker run -t gesellix/trufflehog --json https://github.com/devopssecure/webapp.git > trufflehog'
+                        sh 'docker run -t gesellix/trufflehog https://github.com/ajayadmane/ProDSO.git --json | jq "{branch:.branch, commitHash:.commitHash, path:.path, stringsFound:.stringsFound}" > trufflehog_report.json || true'
                         sh 'cat trufflehog'
                         sh 'echo "Scanning Repositories.....done"'
                         archiveArtifacts artifacts: 'trufflehog_report.json', onlyIfSuccessful: true
