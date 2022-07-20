@@ -4,7 +4,7 @@ pipeline {
     stages {
         //stage('Networking Configuration') {
           //  steps {
-                sh 'docker network ls'
+               // sh 'docker network ls'
            // }
        // }
         stage('Install Dependencies') {
