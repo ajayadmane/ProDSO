@@ -21,7 +21,7 @@ pipeline {
                 stage('Git Repository Scanner') {
                     steps {
                         sh 'cd $WORKSPACE'
-                       // sh'rm trufflhog || true'
+                        sh'rm trufflhog || true'
 	                  //  sh'docker pull gesellix/trufflehog'
 	                   // sh'docker run -t gesellix/trufflehog --json https://github.com/devopssecure/webapp.git > trufflehog'
                         sh 'trufflehog https://github.com/ajayadmane/ProDSO.git --json | jq "{branch:.branch, commitHash:.commitHash, path:.path, stringsFound:.stringsFound}" > trufflehog_report.json || true'
